@@ -94,3 +94,33 @@ async def test_init_entry_fails_if_config_is_missing(hass):
     except ValueError:
         pass
     m_add_entities.assert_not_called()
+
+
+def _code_lock(dps):
+    """Lock entity for a config using set_unlock_code + code_unlock."""
+    from custom_components.tuya_local.helpers.device_config import TuyaDeviceConfig
+
+    cfg = TuyaDeviceConfig("ailrinni_fingerprint_lock.yaml")
+    device = Mock()
+    device.get_property.side_effect = lambda dp_id: dps.get(dp_id)
+    device.async_set_properties = AsyncMock()
+    entity = next(e for e in cfg.all_entities() if e.entity == "lock")
+    return TuyaLocalLock(device, entity), device
+
+
+@pytest.mark.asyncio
+async def test_code_lock_not_sent_when_already_locked():
+    lock, device = _code_lock({"47": False})
+    assert lock.is_locked
+    await lock.async_lock()
+    device.async_set_properties.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_code_lock_sent_when_unlocked():
+    lock, device = _code_lock({"47": True})
+    assert not lock.is_locked
+    await lock.async_lock()
+    device.async_set_properties.assert_awaited_once()
+    sent = device.async_set_properties.call_args.args[0]
+    assert set(sent) == {"60", "61"}

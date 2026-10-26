@@ -187,6 +187,11 @@ class TuyaLocalLock(TuyaLocalEntity, LockEntity):
             _LOGGER.info("%s locking", self._config.config_id)
             await self._lock_dp.async_set_value(self._device, True)
         elif self._code_unlock_dp and self._set_code_dp:
+            # Some locks (EKAZA Zigbee) ignore the action byte and unlock on
+            # any valid code, so do not send a lock command if already locked.
+            if self.is_locked:
+                _LOGGER.info("%s already locked", self._config.config_id)
+                return
             code = "%08d" % randbelow(100000000)
             setting = self.build_code_set_msg(code)
             msg = self.build_code_unlock_msg(
