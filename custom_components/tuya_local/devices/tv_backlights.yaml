@@ -3,6 +3,8 @@ products:
   - id: gaobbrxqiblcng2p
     manufacturer: Loginovo
     model: Ambient TV sync light
+  - id: trp6ug06xfzz56sz
+    manufacturer: EKAZA
 entities:
   - entity: light
     translation_key: backlight
@@ -201,3 +203,37 @@ entities:
       - id: 120
         name: sensor
         type: integer
+  - entity: number
+    name: RF channel
+    icon: "mdi:radio-tower"
+    category: config
+    dps:
+      - id: 105
+        type: integer
+        name: value
+        optional: true
+        range:
+          min: 0
+          max: 64
+  - entity: number
+    name: Lamp brightness
+    icon: "mdi:brightness-percent"
+    category: config
+    dps:
+      - id: 108
+        type: integer
+        name: value
+        optional: true
+        unit: "%"
+        range:
+          min: 1
+          max: 100
+  - entity: switch
+    name: Strip position test
+    icon: "mdi:test-tube"
+    category: config
+    dps:
+      - id: 115
+        type: boolean
+        name: switch
+        optional: true
