@@ -160,3 +160,21 @@ entities:
             value: "6 days"
           - dps_val: "7"
             value: "7 days"
+  - entity: binary_sensor
+    class: problem
+    category: diagnostic
+    dps:
+      - id: 19
+        type: bitfield
+        name: sensor
+        optional: true
+        mapping:
+          - dps_val: 0
+            value: false
+          - dps_val: null
+            value: false
+          - value: true
+      - id: 19
+        type: bitfield
+        name: fault_code
+        optional: true
