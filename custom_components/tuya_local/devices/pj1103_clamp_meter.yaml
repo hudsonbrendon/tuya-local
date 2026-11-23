@@ -2,6 +2,7 @@ name: Energy meter
 products:
   - id: djfep9s6s3b2qk89
     model: PJ-1103 clamp
+  - id: pq05r3pqoro1wyca
 entities:
   - entity: sensor
     class: power
@@ -125,3 +126,28 @@ entities:
         type: bitfield
         name: fault_code
         optional: true
+  - entity: switch
+    name: Overpower alarm
+    icon: "mdi:flash-alert"
+    category: config
+    dps:
+      - id: 101
+        type: boolean
+        name: switch
+        optional: true
+  - entity: number
+    name: Overpower alarm threshold
+    icon: "mdi:flash-alert"
+    category: config
+    class: power
+    dps:
+      - id: 107
+        type: integer
+        name: value
+        optional: true
+        unit: W
+        range:
+          min: 0
+          max: 50000
+        mapping:
+          - step: 100
