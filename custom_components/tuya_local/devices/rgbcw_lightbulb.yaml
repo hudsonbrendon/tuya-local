@@ -62,6 +62,13 @@ products:
     model_id: E157
   - id: keytfesxxsqewnqy
     manufacturer: Daybetter
+  - id: izuza54vextje8hj
+  - id: wuuxqhmdtjdqa0bg
+    manufacturer: EKAZA
+  - id: iu4cluxxmiicpqha
+  - id: kl1exhf10y5gkdas
+  - id: phoave196kb0tlyy
+  - id: qbpeoed3iqkv3jha
 entities:
   - entity: light
     dps:
@@ -280,3 +287,39 @@ entities:
         type: base64
         optional: true
         name: value
+  - entity: select
+    name: Fade
+    icon: "mdi:gradient-horizontal"
+    category: config
+    dps:
+      # switch_gradient: version | fade-in ms (3 bytes) | fade-out ms (3 bytes)
+      - id: 35
+        type: base64
+        name: option
+        optional: true
+        mapping:
+          - dps_val: "AAAAAAAAAA=="
+            value: "off"
+          - dps_val: "AAABkAABkA=="
+            value: fast
+          - dps_val: "AAADIAADIA=="
+            value: normal
+          - dps_val: "AAAF3AAF3A=="
+            value: smooth
+          - dps_val: "AAALuAALuA=="
+            value: slow
+  - entity: select
+    name: Power-on behavior
+    icon: "mdi:power-settings"
+    category: config
+    dps:
+      # power_memory: version, mode (0 initial, 1 last, 2 custom), HSVBT
+      - id: 33
+        type: base64
+        name: option
+        optional: true
+        mapping:
+          - dps_val: "AAAAAAPoA+gAFQAA"
+            value: initial
+          - dps_val: "AAEAAAPoA+gAFQAA"
+            value: memory
